@@ -8,6 +8,7 @@ dotenv.config()
 // rest object creation (for api)
 const app = express()
 
+
 // rest api
 app.get("/",(req,res)=>{
    res.send('<h1>welcome to Ecommerce app</h1>');
@@ -15,6 +16,8 @@ app.get("/",(req,res)=>{
 
 // PORT
 // const PORT= 8080
+
+// adding security
 const PORT= process.env.PORT || 8080;
 
 // run app
