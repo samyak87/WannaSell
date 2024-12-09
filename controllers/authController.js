@@ -1,6 +1,9 @@
-import { hashPassword } from "../helpers/authHelper.js";
+import { compare } from "bcrypt";
+import { comparePassword, hashPassword } from "../helpers/authHelper.js";
 import userModel from "../models/userModel.js";
+import JWT from "jsonwebtoken";
 
+// register
 export const registerController = async (req, res) => {
   try {
     const { name, email, phone, password, address } = req.body;
@@ -50,6 +53,63 @@ export const registerController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "error in registration",
+      error,
+    });
+  }
+};
+
+//post - login
+export const loginController = async(req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      res.status(404).send({
+        success: false,
+        message: "bad credentials",
+       
+      });
+    }
+      
+      // checking if the user doesnt exists
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      res.status(404).send({
+        success: false,
+        message: "user doesnt exists, please register",
+      });
+    }
+      const match = await comparePassword(password,user.password);
+      if(!match)
+      {
+       res.status(200).send({
+          success: false,
+          message: "wrong password"
+        })
+      }
+
+      //token
+      const token= await JWT.sign({_id : user._id}, process.env.JWT_SECRET,{
+      expiresIn : '5d',
+      });
+
+     res.status(200).send({
+        success:true,
+        message : "login successful",
+       user:{
+          name: user.name,
+          email : user.email
+        },
+        token
+      })
+        
+      
+
+    
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "error in login",
       error,
     });
   }
