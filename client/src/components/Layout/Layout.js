@@ -1,9 +1,14 @@
 import React from "react";
-
-const Layout = () => {
+import Header from "./Header"
+import Footer from "./Footer"
+const Layout = (props) => {
   return (
     <div>
-      <h1>layout</h1>
+      <Header/>
+      <main>
+      {props.children}
+      </main>
+      <Footer/>
     </div>
   );
 };
