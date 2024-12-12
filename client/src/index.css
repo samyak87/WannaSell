@@ -3,3 +3,51 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+/* navbar css */
+
+.navbar{
+ font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-weight: 600;
+  line-height: 20px;
+  text-transform: uppercase;
+  box-shadow: 0 10px 10px -3px grey;
+  border-bottom: 0.7px solid grey !important;
+}
+
+.nav-link{
+  font-weight: 200 !important;
+}
+.nav-link:hover{
+  font-weight: 700 !important;
+  color: black;
+  background-color: rgb(255, 255, 255);
+}
+
+.active{
+  border-bottom: 3px solid black;
+}
+
+.navbar-brand{
+  letter-spacing: 3px;
+}
+
+
+/* page not found css */
+.pnf{
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.pnf-btn{
+  text-decoration: none;
+  color: black;
+  border-bottom: 2px solid black;
+}
+
+.pnf-btn:hover{
+  font-weight: 600px;
+  font-size: large;
+}
+
