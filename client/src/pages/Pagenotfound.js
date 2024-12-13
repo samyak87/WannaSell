@@ -3,7 +3,7 @@ import Layout from '../components/Layout/Layout'
 import {Link} from 'react-router-dom'
 const Pagenotfound = () => {
   return (
-    <Layout>
+    <Layout title={"not found"} description={"go back"}>
       <div className='pnf'>
 
         <h1 >404</h1>
