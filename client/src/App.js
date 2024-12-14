@@ -3,6 +3,10 @@ import HomePage from "./pages/HomePage.js"
 import Pagenotfound from "./pages/Pagenotfound.js"
 import Register from "./pages/Auth/Register.js";
 import Login from "./pages/Auth/Login.js";
+
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
   return (
     <>

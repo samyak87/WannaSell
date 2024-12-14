@@ -63,7 +63,18 @@
   flex-direction: column;
 }
 
+.login{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  flex-direction: column;
+}
+
 .form{
-  border: solid 3px black;
+  /* border: solid 3px black; */
+  margin-top: 10px;
   padding: 10px 80px 10px 80px;
+  box-shadow: 10px 1px 10px 5px grey;
+  background-color: rgb(232, 232, 232);
 }
