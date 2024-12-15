@@ -22,7 +22,7 @@ const Register = () => {
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_API}/api/v1/auth/register`,
-        { name, email, password, address, phone }
+        {  email, password, address, phone ,name}
       );
 
       if (res && res.data.success) {
@@ -70,7 +70,7 @@ const Register = () => {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
+            <label htmlFor="exampleInputPassword" className="form-label">
               Password
             </label>
             <input
@@ -78,7 +78,7 @@ const Register = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="form-control"
-              id="exampleInputPassword1"
+              id="exampleInputPassword"
               required
             />
           </div>
