@@ -59,18 +59,17 @@ export const registerController = async (req, res) => {
 };
 
 //post - login
-export const loginController = async(req, res) => {
+export const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
       res.status(404).send({
         success: false,
         message: "bad credentials",
-       
       });
     }
-      
-      // checking if the user doesnt exists
+
+    // checking if the user doesnt exists
     const user = await userModel.findOne({ email });
     if (!user) {
       res.status(404).send({
@@ -78,36 +77,30 @@ export const loginController = async(req, res) => {
         message: "user doesnt exists, please register",
       });
     }
-      const match = await comparePassword(password,user.password);
-      if(!match)
-      {
-       res.status(200).send({
-          success: false,
-          message: "wrong password"
-        })
-      }
-
-      //token
-      const token= await JWT.sign({_id : user._id}, process.env.JWT_SECRET,{
-      expiresIn : '5d',
+    const match = await comparePassword(password, user.password);
+    if (!match) {
+      res.status(200).send({
+        success: false,
+        message: "wrong password",
       });
+    }
 
-     res.status(200).send({
-        success:true,
-        message : "login successful",
-       user:{
-          name: user.name,
-          email : user.email,
-          address: user.address,
-          phone: user.phone
+    //token
+    const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "5d",
+    });
 
-        },
-        token
-      })
-        
-      
-
-    
+    res.status(200).send({
+      success: true,
+      message: "login successful",
+      user: {
+        name: user.name,
+        email: user.email,
+        address: user.address,
+        phone: user.phone,
+      },
+      token,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).send({
@@ -118,11 +111,41 @@ export const loginController = async(req, res) => {
   }
 };
 
-
-
-
 // test controller
-export const testController = (req,res)=>{
- res.send("protected routes" )
-  
-}
+export const testController = (req, res) => {
+  res.send("protected routes");
+};
+
+// forgot-password controller
+export const forgotPasswordController = async (req, res) => {
+  try {
+    const { email, answer, newPassword } = req.body;
+
+    if (!email) {
+      res.status(400).send({
+        message: "Email is required",
+      });
+    }
+    if (!answer) {
+      res.status(400).send({
+        message: "Answer is required",
+      });
+    }
+    if (!newPassword) {
+      res.status(400).send({
+        message: "New Password is required",
+      });
+    }
+
+    // check
+    const user = await userModel.findOne({email,answer});
+    
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Something went wrong",
+      error,
+    });
+  }
+};
