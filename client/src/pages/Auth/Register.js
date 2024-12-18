@@ -13,6 +13,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [answer,setAnswer] = useState("");
   const navigate = useNavigate();
 
   // function to handle the form submission
@@ -22,7 +23,7 @@ const Register = () => {
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_API}/api/v1/auth/register`,
-        {  email, password, address, phone ,name}
+        {  email, password, address, phone ,name,answer}
       );
 
       if (res && res.data.success) {
@@ -109,6 +110,20 @@ const Register = () => {
             />
           </div>
 
+          <div className="mb-3">
+            <label htmlFor="exampleInputAnswer" className="form-label">
+             Question
+            </label>
+            <input
+              type="text"
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
+              placeholder="Your Bestfriend name?"
+              className="form-control"
+              id="exampleInputAnswer"
+              required
+            />
+          </div>
           <div className="text-center">
             <button type="submit" className="btn   btn-primary">
               Submit

@@ -7,15 +7,10 @@ import { toast } from "react-toastify";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import { useAuth } from "../../context/auth";
-
-const Login = () => {
-
-  
-  
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [auth, setAuth] = useAuth();
+const ForgotPassword = () => {
+    const [email, setEmail] = useState("");
+    const [newPassword,setNewPassword] = useState("")
+  const [answer, setAnswer] = useState("");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,21 +19,15 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        `${process.env.REACT_APP_API}/api/v1/auth/login`,
-        { email, password }
+        `${process.env.REACT_APP_API}/api/v1/auth/forgot-password`,
+        { email, newPassword , answer}
       );
 
       if (res && res.data.success) {
         toast.success(res.data.message);
-        setAuth({
-          ...auth,
-          user: res.data.user,
-          token: res.data.token,
-        });
-
-        localStorage.setItem("auth", JSON.stringify(res.data));
+       
         // navigated to login page after successfully registered
-        navigate(location.state || "/");
+        navigate( "/login");
       } else {
         toast.error(res.data.message);
       }
@@ -46,14 +35,13 @@ const Login = () => {
       console.log(error);
       toast.error("Something went wrong");
     }
-  };
-
+}
   return (
-    <Layout title="Login">
+    <Layout title={"Forgot Password"}>
       <div className="login">
         <div className="login">
-          <h1>Login Page</h1>
-          <form className="form" onSubmit={handleSubmit}>
+        <h1>Forgot Password?</h1>
+        <form className="form" onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="exampleInputEmail" className="form-label">
                 Email
@@ -67,36 +55,49 @@ const Login = () => {
                 required
               />
             </div>
+
             <div className="mb-3">
-              <label htmlFor="exampleInputPassword1" className="form-label">
-                Password
+              <label htmlFor="exampleInputPassword" className="form-label">
+                New Password
               </label>
               <input
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
                 className="form-control"
-                id="exampleInputPassword1"
+                id="exampleInputPassword"
                 required
               />
             </div>
 
+            <div className="mb-3">
+              <label htmlFor="exampleInputAnswer" className="form-label">
+               Question
+              </label>
+              <input
+                type="text"
+                value={answer}
+                placeholder="Your Besfriend?"
+                onChange={(e) => setAnswer(e.target.value)}
+                className="form-control"
+                id="exampleInputAnswer"
+                required
+              />
+            </div>
+          
+
             <div className="text-center">
               <div className="mb-1">
                 <button
-                  type="button"
-                  className="btn   btn-danger"
-                  onClick={() => {
-                    navigate("/forgot-password");
-                  }}
+                  type="submit"
+                  className="btn btn-primary"
+              
                 >
-                  Forgot Password?
+Reset Password
                 </button>
               </div>
 
-              <button type="submit" className="btn   btn-primary">
-                Login
-              </button>
+             
             </div>
           </form>
         </div>
@@ -105,4 +106,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgotPassword;
