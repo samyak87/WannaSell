@@ -8,8 +8,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import { useAuth } from "../../context/auth";
 const ForgotPassword = () => {
-    const [email, setEmail] = useState("");
-    const [newPassword,setNewPassword] = useState("")
+  const [email, setEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [answer, setAnswer] = useState("");
 
   const navigate = useNavigate();
@@ -20,14 +20,14 @@ const ForgotPassword = () => {
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_API}/api/v1/auth/forgot-password`,
-        { email, newPassword , answer}
+        { email, newPassword, answer }
       );
 
       if (res && res.data.success) {
         toast.success(res.data.message);
-       
+
         // navigated to login page after successfully registered
-        navigate( "/login");
+        navigate("/login");
       } else {
         toast.error(res.data.message);
       }
@@ -35,13 +35,13 @@ const ForgotPassword = () => {
       console.log(error);
       toast.error("Something went wrong");
     }
-}
+  };
   return (
     <Layout title={"Forgot Password"}>
       <div className="login">
         <div className="login">
-        <h1>Forgot Password?</h1>
-        <form className="form" onSubmit={handleSubmit}>
+          <h1>Forgot Password?</h1>
+          <form className="form" onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="exampleInputEmail" className="form-label">
                 Email
@@ -72,7 +72,7 @@ const ForgotPassword = () => {
 
             <div className="mb-3">
               <label htmlFor="exampleInputAnswer" className="form-label">
-               Question
+                Question
               </label>
               <input
                 type="text"
@@ -84,20 +84,13 @@ const ForgotPassword = () => {
                 required
               />
             </div>
-          
 
             <div className="text-center">
               <div className="mb-1">
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-              
-                >
-Reset Password
+                <button type="submit" className="btn btn-primary">
+                  Reset Password
                 </button>
               </div>
-
-             
             </div>
           </form>
         </div>

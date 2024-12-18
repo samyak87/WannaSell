@@ -44,7 +44,7 @@ export const registerController = async (req, res) => {
       phone,
       password: hashedPassword,
       address,
-      answer
+      answer,
     }).save();
 
     res.status(201).send({
@@ -75,7 +75,8 @@ export const loginController = async (req, res) => {
 
     // checking if the user doesnt exists
     const user = await userModel.findOne({ email });
-    if (!user) {
+    if (!user) 
+    {
       res.status(404).send({
         success: false,
         message: "user doesnt exists, please register",
@@ -83,7 +84,7 @@ export const loginController = async (req, res) => {
     }
     const match = await comparePassword(password, user.password);
     if (!match) {
-      res.status(200).send({
+      res.status(400).send({
         success: false,
         message: "wrong password",
       });
@@ -91,7 +92,7 @@ export const loginController = async (req, res) => {
 
     //token
     const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "5d",
+      expiresIn: "10d",
     });
 
     res.status(200).send({
