@@ -15,6 +15,7 @@ const Header = () => {
     toast.success("Logout Successfully");
   };
   return (
+    
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
@@ -41,7 +42,7 @@ const Header = () => {
                 </NavLink>
               </li>
 
-              {!auth.user ? (
+              {(!auth.user && !auth.admin) ? (
                 <>
                   <li className="nav-item">
                     <NavLink to="/register" className="nav-link">
@@ -63,12 +64,13 @@ const Header = () => {
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      {auth?.user?.name}
+                      {auth?.user?.name}                      
                       </NavLink>
                     <ul className="dropdown-menu">
                       <li>
                         <NavLink
-                          to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`}
+                        
+                          to={`/dashboard/${(auth?.user?.role === 1) ? 'admin' : 'user'}`}
                           className="dropdown-item"
                          
                         >
@@ -105,7 +107,9 @@ const Header = () => {
         </div>
       </nav>
     </>
+
   );
+  
 };
 
 export default Header;
