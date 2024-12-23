@@ -14,7 +14,7 @@ const CategoryForm = ({handleSubmit,value,setValue}) => {
         </div>
       
         <button type="submit" className="btn btn-primary">
-          Add
+          Update
         </button>
       </form>
     </>

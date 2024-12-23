@@ -29,7 +29,6 @@ function App() {
             <Route path="admin/create-category" element={<CreateCategory />} />
             <Route path="admin/create-product" element={<CreateProduct />} />
             <Route path="admin/users" element={<Users />} />
-
         </Route>
         <Route path="/dashboard" element={<PrivateRoute />}>
             <Route path="user" element={<Dashboard />} />

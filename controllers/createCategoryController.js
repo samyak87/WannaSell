@@ -48,7 +48,7 @@ export const updateCategoryController = async(req,res) =>{
     const {name} = req.body;
     const {id} = req.params;
       const category = await CategoryModel.findByIdAndUpdate(id,{name,slug: slugify(name)},{new:true});
-      res.status(201).send({
+      res.status(200).send({
         message : "category updated",
         success : true,
         category
@@ -68,8 +68,8 @@ export const updateCategoryController = async(req,res) =>{
 export const categoriesController = async(req,res) =>{
   try {
     const {name} = req.body;
-      const categories = await CategoryModel.find();
-      res.status(201).send({
+      const categories = await CategoryModel.find({});
+      res.status(200).send({
         message : "categories retrieved",
         success : true,
         categories
@@ -88,9 +88,8 @@ export const categoriesController = async(req,res) =>{
 // get single category
 export const categoryController = async(req,res) =>{
   try {
-   const {slug} = req.params.slug
-      const category = await CategoryModel.findOne(slug);
-      res.status(201).send({
+      const category = await CategoryModel.findOne({slug: req.params.slug});
+      res.status(200).send({
         message : "category retrieved",
         success: true,
         category

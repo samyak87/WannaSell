@@ -6,7 +6,7 @@ import axios from "axios";
 import CategoryForm from "../../components/Form/CategoryForm.js";
 
 import {Modal} from 'antd';
-// import { set } from "mongoose";
+import { set } from "mongoose";
 
 const CreateCategory = () => {
   const [categories, setCategories] = useState([]);
@@ -21,19 +21,22 @@ const CreateCategory = () => {
     e.preventDefault();
 
     try{
-       const {data} = await axios.post(`${process.env.REACT_APP_API}/api/v1/category/create-category`,{name,});
-       if(data?.success)
+       const {data} = await axios.post(`${process.env.REACT_APP_API}/api/v1/category/create-category`,
+        {name,});
+       if(data.success)
        {
          toast.success(`${data.name} is created`)
          getAllCategory();
        }
        else{
+        
         toast.error("Something went wrong in category creation")
       }
     }
     catch(error)
     {
       console.log(error);
+
       toast.error("Something went wrong in input form")
     }
   }
@@ -47,6 +50,7 @@ const CreateCategory = () => {
       }
     } catch (error) {
       console.log(error);
+
       toast.error("Something went wrong in getting category");
     }
   };
@@ -60,15 +64,36 @@ const CreateCategory = () => {
     e.preventDefault();
 
     try {
-      const {data} = await axios.put(`${process.env.REACT_APP_API}/api/v1/category/update-category/
-        ${selected._id}`,{name:updatedName})      
+      const {data} = await axios.put(`${process.env.REACT_APP_API}/api/v1/category/update-category/${selected._id}`,{name:updatedName})      
 
-      if(data.success)
+      if(data?.success)
       {
         toast.success("Category updated successfully")
         setSelected(null);
         setUpdatedName("");
         setVisible(false);
+        getAllCategory();
+      }
+      else{
+        toast.error(data.message);
+      }
+    } catch (error) {
+
+      console.log(error);
+      toast.error("Something went wrong")
+      
+    }
+  }
+
+  // delete category
+  const handleDelete = async(pid)=>{
+
+    try {
+      const {data} = await axios.delete(`${process.env.REACT_APP_API}/api/v1/category/delete-category/${pid}`)      
+
+      if(data.success)
+      {
+        toast.success("Category deleted successfully")
         getAllCategory();
       }
       else{
@@ -92,7 +117,8 @@ const CreateCategory = () => {
             <div className="">
               <h2>Manage category</h2>
               <div className="p-3">
-                   <CategoryForm handleSubmit={handleSubmit} value={name} setValue={setName}/>
+                   <CategoryForm handleSubmit={handleSubmit} value={name} 
+                   setValue={setName}/>
               </div>
               <div className="m-3">
                 <table className="table">
@@ -108,9 +134,19 @@ const CreateCategory = () => {
                     <>
                     <tr>
                     <td key={c._id} className="w-75">{c.name}</td>
-                    <td > <button className="btn btn-primary ms-1" onClick={()=>
-                      {setVisible(true); setUpdatedName(c.name); setSelected(c)}}>Edit</button></td>
-                    <td > <button className="btn btn-danger ms-1">Delete</button></td>
+                   <td >  <button
+                            className="btn btn-primary ms-2"
+                            onClick={() => {
+                              setVisible(true);
+                              setUpdatedName(c.name);
+                              setSelected(c);
+                            }}
+                          >
+                            Edit
+                          </button></td>
+                    <td > <button className="btn btn-danger ms-1"  onClick={() => {
+                             handleDelete(c._id)
+                            }}>Delete</button></td>
                     </tr>
                     </>
                     
@@ -120,10 +156,17 @@ const CreateCategory = () => {
               </div>
             </div>
           </div>
-          <Modal onCancel={ () =>setVisible(false)} footer={null} visible={visible}>
-                  <CategoryForm value={updatedName} setValue={setUpdatedName} 
-                  handleSubmit={handleUpdate}/>
-          </Modal>
+          <Modal
+              onCancel={() => setVisible(false)}
+              footer={null}
+              visible={visible}
+            >
+              <CategoryForm
+                value={updatedName}
+                setValue={setUpdatedName}
+                handleSubmit={handleUpdate}
+              />
+            </Modal>
         </div>
       </div>
     </Layout>
