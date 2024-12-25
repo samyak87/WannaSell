@@ -13,7 +13,6 @@ const Products = () => {
     try {
       const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/get-product`);
       setProducts(data.product);
-      console.group(data);      
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");
@@ -33,7 +32,7 @@ const Products = () => {
           </div>
           <div className="col-md-9">
             <h1 className="text-center">All Products</h1>
-            <div className="d-flex">
+            <div className="d-flex flex-wrap">
             {products?.map((p) => (
               <Link
                 to={`/dashboard/admin/product/${p.slug}`}
@@ -47,8 +46,8 @@ const Products = () => {
                     alt={p.name}
                   />
                   <div className="card-body">
-                    <h5 className="card-title">{p.name}</h5>
-                    <p className="card-text">{p.description}</p>
+                    <h5 className="card-title text-center">{p.name}</h5>
+                    <p className="card-text text-center">{p.description}</p>
                   </div>
                 </div>
               </Link>
