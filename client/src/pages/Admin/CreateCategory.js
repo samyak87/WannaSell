@@ -113,7 +113,7 @@ const CreateCategory = () => {
           <div className="col-md-3 p-3">
             <AdminMenu />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-7">
             <div className="">
               <h2>Manage category</h2>
               <div className="p-3">
