@@ -3,6 +3,7 @@ import productModel from "../models/productModel.js";
 import fs from "fs";
 import { log } from "console";
 import e from "express";
+import { message } from "antd";
 export const createProductController = async (req, res) => {
   try {
     const { name, slug, description, price, category, shipping, quantity } =
@@ -188,3 +189,79 @@ export const updateProductController = async (req, res) => {
     });
   }
 };
+
+
+// filter products controller
+export const filterProductsController = async(req,res) =>{
+  try {
+    const {checked,radio} = req.body
+    let args= {};
+    if(checked.length>0) args.category= checked;
+    if(radio.length>0) args.price = {$gte:radio[0], $lte: radio[1]}
+
+    const products = await productModel.find(args);
+    res.status(200).send({
+      message:"Products fetched successfully",
+      products,
+      success:true
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+    success:false,
+    message:"Something went wrong",
+    error
+    })
+    
+    
+  }
+}
+
+
+
+// product count
+
+export const productCountController = async(req,res) =>{
+  try {
+    const total = await productModel.find({}).estimatedDocumentCount();
+    res.status(200).send({
+      success:true,
+      total,
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      message:"Error in counting products",
+      success:false,
+      error
+    })
+    
+  }
+}
+
+
+// product list per page
+export const productListController= async(req,res) => {
+  try {
+    const perPage = 3;
+    const page = req.params.page ? req.params.page : 1;
+    const products = await productModel
+      .find({})
+      .select("-photo")
+      .skip((page - 1) * perPage)
+      .limit(perPage)
+      .sort({ createdAt: -1 });
+    res.status(200).send({
+      success: true,
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      message:"Error in listing products",
+      success:false,
+      error
+    })
+    
+  }
+}
