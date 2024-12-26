@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 
 import { AuthProvider } from "./context/auth";
+import { ConfigProvider } from "antd";
 
 // ant design css
 import 'antd/dist/reset.css'
@@ -13,9 +14,11 @@ import 'antd/dist/reset.css'
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <AuthProvider>
-    <BrowserRouter>
+      <ConfigProvider wave={{ disabled: true }}>
+    <BrowserRouter  >
       <App />
     </BrowserRouter>
+    </ConfigProvider>
   </AuthProvider>
 );
 
