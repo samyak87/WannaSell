@@ -18,6 +18,7 @@ import Profile from "./pages/user/Profile.js";
 import Orders from "./pages/user/Orders.js";
 import Products from "./pages/Admin/Products.js";
 import UpdateProduct from "./pages/Admin/UpdateProduct.js";
+import Search from "./pages/Search.js";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         
         <Route path="/" element={<HomePage />} />
         <Route path="*" element={<Pagenotfound />} /> 
+        <Route path="search" element={<Search />} />
 
         <Route path="/dashboard" element={<AdminRoute />}>
             <Route path="admin" element={<AdminDashboard />} />

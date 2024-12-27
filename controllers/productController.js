@@ -147,7 +147,7 @@ export const updateProductController = async (req, res) => {
     const { name, description, price, category, quantity, shipping } =
       req.fields;
     const { photo } = req.files;
-    //alidation
+    //validation
     switch (true) {
       case !name:
         return res.status(500).send({ error: "Name is Required" });
@@ -261,6 +261,32 @@ export const productListController= async(req,res) => {
       message:"Error in listing products",
       success:false,
       error
+    })
+    
+  }
+}
+
+
+
+// search product controller
+export const searchProductController = async(req,res) =>{
+  try {
+    const {keyword} = req.params;
+    const result = await productModel.find({
+      $or :[
+        {name : {$regex:keyword, $options: 'i'}},
+        {description : {$regex:keyword, $options: 'i'}}
+
+      ]
+    }).select('-photo')
+    res.json(result);
+    
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      error,
+      success:false,
+      message:"Something went wrong"
     })
     
   }

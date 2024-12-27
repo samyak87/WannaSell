@@ -195,7 +195,8 @@ const HomePage = () => {
                 {loading ? "Loading ..." : "Load More"}
               </button>
             )}
-          </div>          </div>
+          </div>       
+         </div>
         </div>
       </div>
     </Layout>
