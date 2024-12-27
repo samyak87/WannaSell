@@ -88,7 +88,7 @@ export const getSingleProductController = async(req,res) =>{
   }
   catch (error) {
     console.log(error);
-    res.status(500),send({
+    res.status(500).send({
         message:"Error in getting product",
         error,
         success:false
@@ -112,7 +112,7 @@ export const productPhotoController = async(req,res) =>{
       }
  catch (error) {
     console.log(error);
-    res.status(500),send({
+    res.status(500).send({
         message:"Error in getting product photo",
         error,
         success:false

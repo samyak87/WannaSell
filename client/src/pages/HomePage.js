@@ -5,9 +5,10 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { Button, Checkbox,Radio } from "antd";
 import {Prices} from '../components/Prices.js'
+import { useNavigate } from "react-router-dom";
 const HomePage = () => {
   
-
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
@@ -160,6 +161,11 @@ const HomePage = () => {
                   to={`/dashboard/admin/product/${p.slug}`}
                   key={p._id}
                   className="product-link "
+                  onClick={(e) => {
+                    if (e.target.tagName === "BUTTON") {
+                      e.preventDefault(); // Stop the Link from navigating
+                    }
+                  }}
                 >
                   <div className="card m-2" style={{ width: "18rem" }}>
                     <img
@@ -172,7 +178,7 @@ const HomePage = () => {
                       <p className="card-text text-center">{p.description.substring(0,3)}</p>
                       <p className="card-text text-center">${p.price}</p>
 
-                      <button className="btn btn-primary m-2">
+                      <button className="btn btn-primary m-2" onClick={() => navigate(`/product/${p.slug}`)}>
                         More Details
                       </button>
                       <button className="btn btn-secondary m-2">

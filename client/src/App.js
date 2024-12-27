@@ -19,6 +19,7 @@ import Orders from "./pages/user/Orders.js";
 import Products from "./pages/Admin/Products.js";
 import UpdateProduct from "./pages/Admin/UpdateProduct.js";
 import Search from "./pages/Search.js";
+import ProductDetails from "./pages/ProductDetails.js";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
       <Routes>
         
         <Route path="/" element={<HomePage />} />
+        <Route path="/product/:slug" element={<ProductDetails />} />
         <Route path="*" element={<Pagenotfound />} /> 
         <Route path="search" element={<Search />} />
 
